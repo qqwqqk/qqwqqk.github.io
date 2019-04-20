@@ -1,0 +1,19 @@
+{
+  "name": "qqwqqk",
+  "version": "1.0.0",
+  "description": "qqwqqk page",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qqwqqk/qqwqqk.github.io.git"
+  },
+  "author": "qqwqqk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/qqwqqk/qqwqqk.github.io/issues"
+  },
+  "homepage": "https://github.com/qqwqqk/qqwqqk.github.io#readme"
+}
