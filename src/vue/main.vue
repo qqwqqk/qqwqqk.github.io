@@ -7,7 +7,7 @@
                 <div class="image_box">
                     <img class="border" v-bind:src="site.show" usemap="#imglink"/>
                     <map name="imglink">
-                        <area class="map_area" shape="rect" coords="100,100,360,200" v-bind:href="site.href" v-bind:title="site.title" />
+                        <area class="map_area" shape="rect" coords="50,50,460,300" target="_blank" v-bind:href="site.href" v-bind:title="site.title" />
                     </map>
                 </div>
         
@@ -29,18 +29,20 @@
                 </div>
             </div>
         
+            <img class='move_left' src='src/images/left.png' v-on:click='moveLeft()'/>
             <div class="list">
-                <VueScroll :ops = "ops">
+                <VueScroll :ops = "ops" ref="vs">
                     <div class="list_form" v-bind:style="{ width: siteFormLength }">
-                        <template v-for="item in sites">
-                            <div class="site_box" :key="item.title">
-                                <img class="site_icon" v-bind:src="item.icon" v-on:click="clickItem(item)"/><br/>
+                        <template v-for="(item, index) in sites">
+                            <div v-bind:id="'item_'+index" class="site_box" :key="index">
+                                <img class="site_icon" v-bind:src="item.icon" v-on:click="clickItem(item, index)"/><br/>
                                 <input class="site_name" type="input" v-bind:value="item.title" v-bind:style="{ backgroundColor: isActive(item) ? '#66ccff' : 'white' }" readonly/>
                             </div>
                         </template>
                     </div>
                 </VueScroll>
             </div>
+            <img class='move_right' src='src/images/right.png' v-on:click='moveRight()'/>
         </div>
 
         <div class="footer"></div>
@@ -75,13 +77,9 @@
                     "show":"src/images/usericon3.jpg",
                     "href":"#"
                 },
-
                 sites: [],
-                site: {
-                    "title":"Alchemy",
-                    "show":"src/images/navigation/Alchemy_show.jpg",
-                    "href":"#"
-                }
+                index: -1,
+                site: {}
             }
         },
         computed:{
@@ -98,8 +96,24 @@
             isActive:function (message) {
                 return message === this.site;
             },
-            clickItem: function (message) {
-                this.site = message;
+            moveLeft:function(){
+                let temp = this.index - 1;
+                if(temp < 0){temp = temp + this.sites.length;}
+                this.index = temp;
+                this.site = this.sites[temp];
+                this.$refs['vs'].scrollIntoView('#item_' + temp, 500);
+            },
+            moveRight:function(){
+                let temp = this.index + 1;
+                if(temp >= this.sites.length){temp = temp - this.sites.length;}
+                this.index = temp;
+                this.site = this.sites[temp];
+                this.$refs['vs'].scrollIntoView('#item_' + temp, 500);
+            },
+            clickItem: function (item, index) {
+                this.site = item;
+                this.index = index;
+                this.$refs['vs'].scrollIntoView('#item_' + index, 500);
             }
         },
         created: function(){
@@ -108,6 +122,7 @@
                 .then((data) => {
                     this.sites = data.site_list;
                     if(this.sites.length > 0){
+                         this.index = 0;
                          this.site = this.sites[0];
                     }
                 })
@@ -132,15 +147,17 @@
     .user_info{ width: 140px; height: 220px; margin: 20px; float: left;}
     .user_icon{ width: 100px; height: 100px; margin: 20px 20px 5px 20px;}
     .user_name{ width: 100px; height: 30px; margin: 0 20px; text-align:center; line-height: 30px;}
-    .user_links{ width: 100px; height: 40px; margin: 5px 20px 20px 20px;}
+    .user_links{ width: 100px; height: 50px; margin: 5px 20px 10px 20px; font-size: 0;}
     .user_icon_css{ width: 100px; height: 100px; border-radius: 50px; border: none;}
-    .user_link_css{ width: 40px; height: 40px; border-radius: 20px; border: none;}
+    .user_link_css{ width: 40px; height: 40px; margin: 5px; border-radius: 20px; border: none;}
 
     .old_info{ width: 140px; height: 120px; margin: 20px; text-align: center; float: left;}
     .btn_old{  width: 100px; height: 40px; margin: auto; outline: none; background-color: deepskyblue; border: none; border-radius: 8px; -webkit-transition-duration: 0.4s; transition-duration: 0.4s;}
     .btn_old:hover{ background-color: #66ccff;}
 
-    .list{ width:780px; height: 160px; padding: 0 50px; margin:10px;}
+    .move_left{ width:40px; height:120px; float: left; outline: none; border: none; margin:20px 5px; opacity: 0.8;}
+    .move_right{ width:40px; height:120px; float: left; outline: none; border: none; margin:20px 5px; opacity: 0.8;}
+    .list{ width:680px; height: 160px; float: left; margin:10px; font-size: 0;}
     .list_form{ width: 680px; height: 160px; font-size: 0; white-space :nowrap;}
     .site_box{ width: 150px; height: 140px; margin: 0 10px; float: left; border-radius: 20px; border: 5px solid rgba(220,220,220,0.5); overflow: hidden; font-size: 0;}
     .site_icon{ width: 140px; height: 100px; background-color: transparent; border: none;}
