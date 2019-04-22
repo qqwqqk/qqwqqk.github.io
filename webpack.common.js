@@ -3,7 +3,10 @@ const cleanWebpackPlugin = require('clean-webpack-plugin'); //引入清除文件
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
-    entry:  __dirname + "/src/script/main.js",      //已多次提及的唯一入口文件
+    entry:  {
+        main : __dirname + "/src/script/main.js",
+        error: __dirname + "/views/error/main.js"
+    },
     module: {
         rules: [
             {
@@ -28,7 +31,15 @@ module.exports = {
     plugins: [
         new htmlWebpackPlugin({
             template: __dirname + "/src/index_tmp.html",
-            filename:'../index.html'                            //根目录入口页面名称
+            filename:'../index.html',                            //根目录入口页面名称
+            inject: 'true',
+            chunks: ['main']
+        }),
+        new htmlWebpackPlugin({
+            template: __dirname + "/views/error/index_tmp.html",
+            filename:'../views/error/index.html',                            //根目录入口页面名称
+            inject: 'true',
+            chunks: ['error']
         }),
         new cleanWebpackPlugin(),
         new VueLoaderPlugin()

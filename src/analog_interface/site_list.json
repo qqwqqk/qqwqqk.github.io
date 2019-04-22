@@ -14,7 +14,7 @@
             "color":"#FE007F",
             "icon":"src/images/navigation/Fate_list.jpg",
             "show":"src/images/navigation/Fate_show.jpg",
-            "href":"https://qqwqqk.github.io/404.github.io/"
+            "href":"views/error/"
         },
         {
             "key":"3",
@@ -22,7 +22,7 @@
             "color":"#FE007F",
             "icon":"src/images/navigation/Glory_list.jpg",
             "show":"src/images/navigation/Glory_show.jpg",
-            "href":"https://qqwqqk.github.io/404.github.io/"
+            "href":"views/error/"
         },
         {
             "key":"4",
@@ -38,7 +38,7 @@
             "color":"#FE007F",
             "icon":"src/images/navigation/Walk_list.jpg",
             "show":"src/images/navigation/Walk_show.jpg",
-            "href":"https://qqwqqk.github.io/404.github.io/"
+            "href":"views/error/"
         }
     ]
 }
