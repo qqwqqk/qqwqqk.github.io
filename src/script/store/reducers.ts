@@ -1,35 +1,17 @@
 import { Item, ListState, SET_ITEM, ListActionType, ShowState, ShowActionType, GET_LIST, GET_ITEM} from "./types";
 
+export const itemInit = (name: string) => {
+  return {
+    name: name, rank: 0,
+    href: '#',
+    image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/'+ name +'_show.jpg'
+  }
+}
+
 const initialState: ListState = {
   lists: [
-    {
-      key : 0, rank: 0, name: 'Alchemy', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Alchemy_show.jpg'
-    },
-    {
-      key : 1, rank: 1, name: 'Fate', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Fate_show.jpg'
-    },
-    {
-      key : 2, rank: 2, name: 'Glory', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Glory_show.jpg'
-    },
-    {
-      key : 3, rank: 3, name: 'Vocaloid', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Vocaloid_show.jpg'
-    },
-    {
-      key : 4, rank: -3, name: 'Walk', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Walk_show.jpg'
-    },
-    {
-      key : 5, rank: -2, name: 'Vocaloid', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Vocaloid_show.jpg'
-    },
-    {
-      key : 6, rank: -1, name: 'Walk', href: '#',
-      image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/Walk_show.jpg'
-    }
+    itemInit('Alchemy'), itemInit('Fate'),  itemInit('Glory'),  itemInit('Vocaloid'),
+    itemInit('Walk')
   ]
 };
 
@@ -43,22 +25,19 @@ export function listReducer(
 ): ListState{
   switch(action.type){
     case SET_ITEM:
-      let temp = state.lists.map(val=>{
-        if(val.key === action.key){
-          val.rank = 0;
+      let list = state.lists;
+      for(let index = 0; index < list.length; index++){
+        if(index === action.key){
+          list[index].rank = 0;
         } else {
-          if(val.key > action.key){
-            val.rank = action.key + state.lists.length - val.key < val.key - action.key ?  val.key - action.key - state.lists.length : val.key - action.key;
+          if(index > action.key){
+            list[index].rank = action.key + state.lists.length - index < index - action.key ?  index - action.key - state.lists.length : index - action.key;
           } else {
-            val.rank = action.key - val.key < val.key + state.lists.length - action.key ?  val.key - action.key :  val.key + state.lists.length - action.key;
+            list[index].rank = action.key - index < index + state.lists.length - action.key ?  index - action.key : index + state.lists.length - action.key;
           }
         }
-        return val;
-      })
-      // console.log(temp);
-      return {
-        lists: temp
       }
+      return {lists: list};
     default:
       return state;
   }
@@ -78,7 +57,7 @@ export function showReducer(
   }
 }
 
-export const getShowList = ( ): ListState => {
+export const getShowList = (): ListState => {
   const state = initialState;
   const action = showState;
   switch(action.type){

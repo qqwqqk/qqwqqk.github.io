@@ -29,15 +29,20 @@ class Main extends React.Component<MainProps>{
 
   constructor(props:any) {
     super(props);
-    console.log("main window loading");
+    // console.log("main window loading");
     setTimeout(()=>{ 
       this.props.setItem(0);
       this.setState({ progress: 100 });
     }, 0);
   }
 
-  setSelect = (key: number) => {
-    this.props.setItem(key);
+  setSelect = (key: string) => {
+    const lists = this.props.listState.lists;
+    for(let index = 0; index < lists.length; index++){
+      if(lists[index].name === key){
+        this.props.setItem(index); break;
+      }
+    }
   }
 
   render(){
@@ -52,12 +57,12 @@ class Main extends React.Component<MainProps>{
             { CardItem(this.props.showLists) }
           </Content>
           <Footer style={{ background: 'transparent' , margin: '0 18%'}}>
-            { CardList({ lists: this.props.showLists.lists, setSelect: this.props.setItem }) }
+            { CardList({ lists: this.props.showLists.lists, setSelect: this.setSelect }) }
           </Footer>
         </Layout>
       )
     } else {
-      console.log(this.state.progress);
+      // console.log(this.state.progress);
       return (
         <Layout className="theme">
           <Header style={{ background: 'transparent' , textAlign: 'center'}}></Header>

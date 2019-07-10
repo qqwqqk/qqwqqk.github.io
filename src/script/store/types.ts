@@ -16,7 +16,6 @@ export interface GetList{
 }
 
 export interface Item{
-  key: number;
   rank: number;
   name: string;
   href: string;

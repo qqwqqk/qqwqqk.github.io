@@ -4,7 +4,7 @@ import { Item } from '../store/types';
 
 interface ListInterfaceProps {
   lists: Array<Item>;
-  setSelect: (key: number) => void;
+  setSelect: (key: string) => void;
 }
 
 export const CardList = (props: ListInterfaceProps) => {
@@ -14,28 +14,29 @@ export const CardList = (props: ListInterfaceProps) => {
   if(lists.length === 5){
     let data: Array<Item> = [];
       for(let i = 0; i < lists.length; i++){
-        if(i>0){ data.push({ key: -i, rank: 99, name: '', href:'', image: '' }); }
+        if(i>0){ data.push({ rank: 99, name: '', href:'', image: '' }); }
         data.push(lists[i]);
       }
 
+    let index = 0;
     const cardlist = data.map((item) => {
+      index = index + 1;
       if(item.rank === 99){ 
-        return( <Col span={1} key={item.key}/> )
+        return( <Col span={1} key={index}/> )
       } else {
         return(
-          <Col className={'rank-' + Math.abs(item.rank) } span={4} key={item.key}>
+          <Col className={'rank-' + Math.abs(item.rank) } span={4} key={index}>
             <Card
               bodyStyle={{ padding: 0 }}
-              size={item.key === 0 ? 'default':'small'}
               cover={
                 <img
                   alt={item.name}
                   src={item.image}
-                  onClick={() => setSelect(item.key)}
+                  onClick={() => setSelect(item.name)}
                 />
               }
             >
-              {item.name}
+              <span className='fontsize'>{item.name}</span>
             </Card>
           </Col>
         )

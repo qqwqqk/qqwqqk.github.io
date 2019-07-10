@@ -58,3 +58,5 @@ body{
 .theme .showlist .rank-0{ padding: 0; }
 .theme .showlist .rank-1{ padding: 1%; }
 .theme .showlist .rank-2{ padding: 2%; }
+
+.theme .showlist .fontsize{ font-size: 1.25vw; }

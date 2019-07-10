@@ -12,13 +12,13 @@ export const InfoItem = (props: ListState) => {
     return (
       <Row type='flex' align='middle' className='showinfo'>
         <Col span={4} style={{textAlign:"center"}}> <Avatar src={UserIcon} /> </Col>
-        <Col span={16}> 
+        <Col span={16} style={{fontSize: '32px'}}> 
           <Breadcrumb>
             <Breadcrumb.Item>五月钦铭</Breadcrumb.Item>
             <Breadcrumb.Item>{name}</Breadcrumb.Item>
           </Breadcrumb> </Col>
         <Col span={4} style={{textAlign:"center"}}> 
-          <Icon type="github" onClick={()=>{ window.open(url, target) }}/> 
+          <Icon type="github" style={{fontSize: '32px'}} onClick={()=>{ window.open(url, target) }}/> 
         </Col>
       </Row>
     )
