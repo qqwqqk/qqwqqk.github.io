@@ -4,7 +4,7 @@ export const itemInit = (name: string) => {
   return {
     name: name, rank: 0,
     href: '#',
-    image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/'+ name +'_show.jpg'
+    image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/'+ name +'.jpg'
   }
 }
 
