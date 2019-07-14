@@ -4,14 +4,13 @@ export const itemInit = (name: string) => {
   return {
     name: name, rank: 0,
     href: '#',
-    image: 'https://qqwqqk.github.io/ResourceRequest.github.io/resource/IMG/qqwqqk/show/'+ name +'.jpg'
+    image: 'https://qqwqqk.github.io/ResourceRequest.github.io/qqwqqk/show/'+ name +'.jpg'
   }
 }
 
 const initialState: ListState = {
   lists: [
-    itemInit('Alchemy'), itemInit('Fate'),  itemInit('Glory'),  itemInit('Vocaloid'),
-    itemInit('Walk')
+    itemInit('Comic'), itemInit('Novel'),  itemInit('Stock'),  itemInit('Video'), itemInit('Vocaloid')
   ]
 };
 
