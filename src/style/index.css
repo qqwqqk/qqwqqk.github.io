@@ -45,6 +45,7 @@ body{
 
 .theme .showitem .ant-card{
   border: 10px solid rgba(220,220,220,0.5);
+  margin: 0 8%;
 }
 
 .theme .showlist .ant-card{

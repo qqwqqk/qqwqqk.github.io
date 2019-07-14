@@ -50,13 +50,13 @@ class Main extends React.Component<MainProps>{
       // console.log(this.state.showState);
       return (
         <Layout className="theme">
-          <Header style={{ background: 'transparent', margin: '0 12%'}}>
+          <Header style={{ background: 'transparent', margin: '0 12%', minWidth: 720}}>
             { InfoItem(this.props.showLists) }
           </Header>
-          <Content style={{ background: 'transparent' , margin: '0 24%'}}>      
+          <Content style={{ background: 'transparent' , margin: '0 20%', minWidth: 600}}>      
             { CardItem(this.props.showLists) }
           </Content>
-          <Footer style={{ background: 'transparent' , margin: '0 18%'}}>
+          <Footer style={{ background: 'transparent' , margin: '0 20%', minWidth: 600}}>
             { CardList({ lists: this.props.showLists.lists, setSelect: this.setSelect }) }
           </Footer>
         </Layout>
