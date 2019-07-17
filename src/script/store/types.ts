@@ -1,23 +1,19 @@
 export const SET_ITEM = "SET_ITEM";
-export const GET_ITEM = "GET_ITEM";
-export const GET_LIST = "GET_LIST";
+export const ADD_ITEM = "ADD_ITEM";
 
 export interface SetItem{
   type: typeof SET_ITEM;
-  key: number;
+  name: string;
 }
 
-export interface GetItem{
-  type: typeof GET_ITEM;
-}
-
-export interface GetList{
-  type: typeof GET_LIST;
+export interface AddItem{
+  type: typeof ADD_ITEM;
+  name: string;
 }
 
 export interface Item{
-  rank: number;
   name: string;
+  rank: number;
   href: string;
   image: string;
 }
@@ -26,9 +22,4 @@ export interface ListState{
   lists: Item[];
 }
 
-export interface ShowState{
-  type: typeof GET_ITEM | typeof GET_LIST ;
-}
-
-export type ListActionType = SetItem;
-export type ShowActionType = GetItem | GetList;
+export type ListActionType = SetItem | AddItem;

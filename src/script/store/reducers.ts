@@ -1,4 +1,4 @@
-import { Item, ListState, SET_ITEM, ListActionType, ShowState, ShowActionType, GET_LIST, GET_ITEM} from "./types";
+import { ListState, SET_ITEM, ADD_ITEM, ListActionType } from "./types";
 
 export const itemInit = (name: string) => {
   return {
@@ -9,13 +9,7 @@ export const itemInit = (name: string) => {
 }
 
 const initialState: ListState = {
-  lists: [
-    itemInit('Comic'), itemInit('Novel'),  itemInit('Stock'),  itemInit('Video'), itemInit('Vocaloid')
-  ]
-};
-
-const showState: ShowState = {
-  type: 'GET_LIST'
+  lists: [ ]
 };
 
 export function listReducer(
@@ -24,57 +18,32 @@ export function listReducer(
 ): ListState{
   switch(action.type){
     case SET_ITEM:
-      let list = state.lists;
-      for(let index = 0; index < list.length; index++){
-        if(index === action.key){
-          list[index].rank = 0;
+      const lists = state.lists;
+      let currindex = 0;
+      for(let index = 0; index < lists.length; index++){
+        if(lists[index].name === action.name){ currindex = index;}
+      }
+      for(let index = 0; index < lists.length; index++){
+        if(index === currindex){
+          lists[index].rank = 0;
         } else {
-          if(index > action.key){
-            list[index].rank = action.key + state.lists.length - index < index - action.key ?  index - action.key - state.lists.length : index - action.key;
+          if(index > currindex){
+            lists[index].rank = currindex + state.lists.length - index < index - currindex ?  index - currindex - state.lists.length : index - currindex;
           } else {
-            list[index].rank = action.key - index < index + state.lists.length - action.key ?  index - action.key : index + state.lists.length - action.key;
+            lists[index].rank = currindex - index < index + state.lists.length - currindex ?  index - currindex : index + state.lists.length - currindex;
           }
         }
       }
-      return {lists: list};
+      // console.log(lists);
+      return {lists: lists};
+    case ADD_ITEM:
+        for(let item of state.lists){
+          if(item.name === action.name ){return state;}
+        }
+        const addlists = [...state.lists, itemInit(action.name)];
+        // console.log(addlists);
+        return {lists: addlists};
     default:
       return state;
-  }
-}
-
-export function showReducer(
-  state = showState,
-  action: ShowActionType
-): ShowState {
-  switch(action.type){
-    case 'GET_ITEM':
-      return {type: 'GET_ITEM'};
-    case 'GET_LIST':
-      return {type: 'GET_LIST'};
-    default:
-      return state;
-  }
-}
-
-export const getShowList = (): ListState => {
-  const state = initialState;
-  const action = showState;
-  switch(action.type){
-    case GET_ITEM:
-      let current:Array<Item> = [];
-      for(let val of state.lists){ if(val.rank === 0){ current.push(val); } }
-      // console.log(current);
-      return { lists: current };
-    case GET_LIST:
-      let select:Array<Item> = [];
-      for(let val of state.lists){ if(Math.abs(val.rank) < 3){ select.push(val); } }
-      let sort = select.sort((a,b)=>(a.rank - b.rank));
-      // console.log(sort);
-      return { lists: sort };
-    default:
-      let cache:Array<Item> = [];
-      for(let val of state.lists){ if(cache.length < 5){ cache.push(val); } }
-      // console.log(cache);
-      return { lists: sort };
   }
 }

@@ -1,20 +1,15 @@
-import { SetItem, GetList, GetItem, SET_ITEM, GET_ITEM, GET_LIST } from "./types";
+import { SetItem, AddItem, SET_ITEM, ADD_ITEM } from "./types";
 
-export function setItem(key: number): SetItem{
+export function setItem(name: string): SetItem{
   return {
     type: SET_ITEM,
-    key: key
+    name: name
   }
 }
 
-export function getItem(): GetItem{
+export function addItem(name: string): AddItem{
   return {
-    type: GET_ITEM
-  }
-}
-
-export function getList(): GetList{
-  return {
-    type: GET_LIST
+    type: ADD_ITEM,
+    name: name
   }
 }

@@ -2,8 +2,9 @@ import * as React from "react";
 import { connect } from "react-redux";
 
 import { MainState } from '../store';
-import { ListState, ShowState } from '../store/types';
-import { setItem, getItem, getList } from '../store/actions';
+import { requestList } from '../store/axios';
+import { ListState } from '../store/types';
+import { setItem, addItem } from '../store/actions';
 
 import { Layout, Row, Col, Icon } from 'antd';
 
@@ -17,47 +18,45 @@ const { Header, Content, Footer } = Layout;
 
 interface MainProps {
   listState: ListState;
-  showState: ShowState;
-  showLists: ListState;
   setItem: typeof setItem;
-  getItem: typeof getItem;
-  getList: typeof getList;
+  addItem: typeof addItem;
 }
 
 class Main extends React.Component<MainProps>{
-  state = { progress: 0 };
+  state = { isReady: false };
 
   constructor(props:any) {
     super(props);
     // console.log("main window loading");
-    setTimeout(()=>{ 
-      this.props.setItem(0);
-      this.setState({ progress: 100 });
-    }, 0);
+    requestList().then(data=>{
+      const lists = data.lists;
+
+      for(let item of lists){
+        this.props.addItem(item.title);
+      }
+
+      if(lists.length > 0){
+        this.props.setItem(lists[0].name);
+        this.setState({isReady: true});
+      }
+    })
   }
 
-  setSelect = (key: string) => {
-    const lists = this.props.listState.lists;
-    for(let index = 0; index < lists.length; index++){
-      if(lists[index].name === key){
-        this.props.setItem(index); break;
-      }
-    }
-  }
+  setSelect = (name: string) => { this.props.setItem(name); }
 
   render(){
-    if(this.state.progress > 99){
+    if(this.state.isReady){
       // console.log(this.state.showState);
       return (
         <Layout className="theme">
           <Header style={{ background: 'transparent', margin: '0 12%', minWidth: 720}}>
-            { InfoItem(this.props.showLists) }
+            { InfoItem(this.props.listState) }
           </Header>
           <Content style={{ background: 'transparent' , margin: '0 20%', minWidth: 600}}>      
-            { CardItem(this.props.showLists) }
+            { CardItem(this.props.listState) }
           </Content>
           <Footer style={{ background: 'transparent' , margin: '0 20%', minWidth: 600}}>
-            { CardList({ lists: this.props.showLists.lists, setSelect: this.setSelect }) }
+            { CardList({ lists: this.props.listState.lists, setSelect: this.setSelect }) }
           </Footer>
         </Layout>
       )
@@ -81,12 +80,10 @@ class Main extends React.Component<MainProps>{
 }
 
 const mapStateToProps = (state: MainState) =>({
-  listState: state.lists,
-  showState: state.showtype,
-  showLists: state.showlists
+  listState: state.listState
 })
 
 export default connect(
   mapStateToProps,
-  { setItem, getItem, getList }
+  { setItem, addItem }
 )(Main);

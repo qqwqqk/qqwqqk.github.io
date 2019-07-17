@@ -1,12 +1,19 @@
 import * as React from "react";
 import { Row, Col, Card, Icon } from 'antd';
-import { ListState } from '../store/types';
+import { Item, ListState } from '../store/types';
+
+const getShowItem = (lists: Array<Item>): Item =>{
+  for(let item of lists){
+    if(item.rank === 0){
+      return item;
+    }
+  }
+  return { rank: 0, name: '', href:'#', image: '#' };
+}
 
 export const CardItem = (props: ListState) => {
-  const lists = props.lists;
-  if(lists.length === 5){
-    const name = lists[2].name;
-    const image = lists[2].image;
+  const item = getShowItem(props.lists);
+  if(item.name !== ''){
     return (
       <Row className='showitem'>
         <Col span={2}/>
@@ -15,8 +22,8 @@ export const CardItem = (props: ListState) => {
             bodyStyle={{height:0, border:0, padding:0}}
             cover={
               <img
-                alt={name}
-                src={image}
+                alt={item.name}
+                src={item.image}
               />
             }
           />

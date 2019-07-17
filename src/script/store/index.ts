@@ -1,9 +1,8 @@
 import { createStore, combineReducers } from "redux";
 
-import { listReducer, showReducer, getShowList } from "./reducers";
+import { listReducer } from "./reducers";
 
-const showlist = () => ( getShowList() )
-const rootReducer = combineReducers({ lists: listReducer, showtype: showReducer, showlists: showlist });
+const rootReducer = combineReducers({ listState: listReducer });
 
 export type MainState = ReturnType<typeof rootReducer>;
 

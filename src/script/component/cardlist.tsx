@@ -7,8 +7,20 @@ interface ListInterfaceProps {
   setSelect: (key: string) => void;
 }
 
+const getShowList = (lists: Array<Item>): Array<Item> =>{
+  let showlist : Array<Item> = [];
+
+  for(let item of lists){
+    if(Math.abs(item.rank) < 3){
+      showlist.push(item);
+    }
+  }
+
+  return showlist.sort((a,b)=>(a.rank - b.rank));
+}
+
 export const CardList = (props: ListInterfaceProps) => {
-  const lists = props.lists;
+  const lists = getShowList(props.lists);
   const setSelect = props.setSelect;
 
   if(lists.length === 5){
