@@ -19,7 +19,7 @@ export interface Item{
 }
 
 export interface ListState{
-  lists: Item[];
+  lists: Array<Item>;
 }
 
 export type ListActionType = SetItem | AddItem;
